@@ -1,0 +1,77 @@
+const express=require("express");
+const port=8000;
+const path=require("path");
+
+
+const db=require("./config/mongoose");
+
+const app=express();
+
+app.use(express.urlencoded());
+app.use(express.static("assets"));
+
+var contactList=[
+    {
+        name:"tonmoy biswas",
+        phone:"7063658215"
+    },
+    {
+        name:"subham dey",
+        phone:"9890483092"
+    },
+    {
+        name:"Binoy sikdar",
+        phone:"9873984729"
+    }
+];
+
+// for (let i in contactList){
+//     console.log("Name : "+contactList[i].name+" Phone : "+contactList[i].phone);
+// }
+
+app.set("view engine","ejs");
+app.set("views",path.join(__dirname,"views"));
+
+app.get("/",function(req,res){
+    //res.writeHead(200,{"content-type":"text/html"});
+    // res.send("<h1>Cool! The server is running</h1>");
+    res.render("home",{title:"I am flying"});
+});
+
+app.get("/contact",function(req,res){
+    res.render("practice",{
+        title:"Contact list",
+        contact_list:contactList
+    })
+});
+
+app.post("/create-contact",function(req,res){
+    // console.log(req.body);
+    contactList.push(req.body);
+    res.redirect("back");
+});
+
+
+app.get("/delete-contact",function(req,res){
+    var contact=req.query;
+    // console.log(contact);
+    var i=0;
+    while(contactList[i].phone!=contact.phone){
+        i++;
+    }
+    contactList.splice(i,1);
+    // console.log(i);
+    res.redirect("back");
+});
+
+
+
+
+app.listen(port,function(error){
+    if(error){
+        console.log(error);
+    }
+    else{
+        console.log("The server is running on port :",port);
+    }
+});
