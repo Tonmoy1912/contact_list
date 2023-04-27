@@ -19,7 +19,7 @@
                 <span>Name : <%= i.name %></span>
                 <span>Phone : <%= i.phone %></span>
             </li>
-            <a href="/delete-contact?name=<%=i.name%>&phone=<%=i.phone%>"><i class="fa-solid fa-rectangle-xmark"></i></a>
+            <a href="/delete-contact?id=<%=i['_id']%>"><i class="fa-solid fa-rectangle-xmark"></i></a>
         </div>
     <% } %>
     </ol>
